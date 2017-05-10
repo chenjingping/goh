@@ -6,8 +6,6 @@ golang client of hbase (via thrift)
 
 Install
 ===
-
-The official thrift package is out of date, need install [thrift4go](https://github.com/apesternikov/thrift4go) first,
 then
 
 	go get github.com/chenjingping/goh
