@@ -1,5 +1,0 @@
-/*
-
-*/
-
-package goh_test
