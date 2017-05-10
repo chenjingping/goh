@@ -4,6 +4,8 @@ import (
 	"net"
 	"net/url"
 
+	"github.com/sdming/goh/Hbase"
+
 	"git.apache.org/thrift.git/lib/go/thrift"
 )
 
