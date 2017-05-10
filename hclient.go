@@ -334,7 +334,7 @@ func (client *HClient) GetVerTs(tableName string, row []byte, column string, tim
  *  - Row: row key
  *  - Attributes: Get attributes
  */
-func (client *HClient) GetRow(tableName string, row []byte, attributes map[string]string) (data []*hbase1.TRowResult, err error) {
+func (client *HClient) GetRow(tableName string, row []byte, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
 	ret, io, e1 := client.hbase.GetRow(hbase1.Text(tableName), hbase1.Text(row), toHbaseTextMap(attributes))
 	if err = checkHbaseError(io, e1); err != nil {
 		return
@@ -356,7 +356,7 @@ func (client *HClient) GetRow(tableName string, row []byte, attributes map[strin
  *  - Columns: List of columns to return, null for all columns
  *  - Attributes: Get attributes
  */
-func (client *HClient) GetRowWithColumns(tableName string, row []byte, columns []string, attributes map[string]string) (data []*hbase1.TRowResult, err error) {
+func (client *HClient) GetRowWithColumns(tableName string, row []byte, columns []string, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
 	ret, io, e1 := client.hbase.GetRowWithColumns(hbase1.Text(tableName), hbase1.Text(row), toHbaseTextList(columns), toHbaseTextMap(attributes))
 	if err = checkHbaseError(io, e1); err != nil {
 		return
@@ -378,7 +378,7 @@ func (client *HClient) GetRowWithColumns(tableName string, row []byte, columns [
  *  - Timestamp: timestamp
  *  - Attributes: Get attributes
  */
-func (client *HClient) GetRowTs(tableName string, row []byte, timestamp int64, attributes map[string]string) (data []*hbase1.TRowResult, err error) {
+func (client *HClient) GetRowTs(tableName string, row []byte, timestamp int64, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
 	ret, io, e1 := client.hbase.GetRowTs(hbase1.Text(tableName), hbase1.Text(row), timestamp, toHbaseTextMap(attributes))
 	if err = checkHbaseError(io, e1); err != nil {
 		return
@@ -401,7 +401,7 @@ func (client *HClient) GetRowTs(tableName string, row []byte, timestamp int64, a
  *  - Timestamp
  *  - Attributes: Get attributes
  */
-func (client *HClient) GetRowWithColumnsTs(tableName string, row []byte, columns []string, timestamp int64, attributes map[string]string) (data []*hbase1.TRowResult, err error) {
+func (client *HClient) GetRowWithColumnsTs(tableName string, row []byte, columns []string, timestamp int64, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
 	ret, io, e1 := client.hbase.GetRowWithColumnsTs(hbase1.Text(tableName), hbase1.Text(row), toHbaseTextList(columns), timestamp, toHbaseTextMap(attributes))
 	if err = checkHbaseError(io, e1); err != nil {
 		return
@@ -422,7 +422,7 @@ func (client *HClient) GetRowWithColumnsTs(tableName string, row []byte, columns
  *  - Rows: row keys
  *  - Attributes: Get attributes
  */
-func (client *HClient) GetRows(tableName string, rows [][]byte, attributes map[string]string) (data []*hbase1.TRowResult, err error) {
+func (client *HClient) GetRows(tableName string, rows [][]byte, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
 	ret, io, e1 := client.hbase.GetRows(hbase1.Text(tableName), toHbaseTextListFromByte(rows), toHbaseTextMap(attributes))
 	if err = checkHbaseError(io, e1); err != nil {
 		return
@@ -444,7 +444,7 @@ func (client *HClient) GetRows(tableName string, rows [][]byte, attributes map[s
  *  - Columns: List of columns to return, null for all columns
  *  - Attributes: Get attributes
  */
-func (client *HClient) GetRowsWithColumns(tableName string, rows [][]byte, columns []string, attributes map[string]string) (data []*hbase1.TRowResult, err error) {
+func (client *HClient) GetRowsWithColumns(tableName string, rows [][]byte, columns []string, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
 	if err = client.Open(); err != nil {
 		return
 	}
@@ -470,7 +470,7 @@ func (client *HClient) GetRowsWithColumns(tableName string, rows [][]byte, colum
  *  - Timestamp: timestamp
  *  - Attributes: Get attributes
  */
-func (client *HClient) GetRowsTs(tableName string, rows [][]byte, timestamp int64, attributes map[string]string) (data []*hbase1.TRowResult, err error) {
+func (client *HClient) GetRowsTs(tableName string, rows [][]byte, timestamp int64, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
 	ret, io, e1 := client.hbase.GetRowsTs(hbase1.Text(tableName), toHbaseTextListFromByte(rows), timestamp, toHbaseTextMap(attributes))
 	if err = checkHbaseError(io, e1); err != nil {
 		return
@@ -493,7 +493,7 @@ func (client *HClient) GetRowsTs(tableName string, rows [][]byte, timestamp int6
  *  - Timestamp
  *  - Attributes: Get attributes
  */
-func (client *HClient) GetRowsWithColumnsTs(tableName string, rows [][]byte, columns []string, timestamp int64, attributes map[string]string) (data []*hbase1.TRowResult, err error) {
+func (client *HClient) GetRowsWithColumnsTs(tableName string, rows [][]byte, columns []string, timestamp int64, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
 	ret, io, e1 := client.hbase.GetRowsWithColumnsTs(hbase1.Text(tableName), toHbaseTextListFromByte(rows), toHbaseTextList(columns), timestamp, toHbaseTextMap(attributes))
 	if err = checkHbaseError(io, e1); err != nil {
 		return
