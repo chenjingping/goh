@@ -1,26 +1,27 @@
 /*
 
 
-*/
+ */
 
 package goh
 
 import (
 	"bytes"
-	"github.com/sdming/goh/Hbase"
+
+	"github.com/chenjingping/goh/hbase1"
 )
 
 /*
 HbaseError
 */
 type HbaseError struct {
-	IOErr  *Hbase.IOError         // IOError
-	ArgErr *Hbase.IllegalArgument // IllegalArgument
-	Err    error                  // error
+	IOErr  *hbase1.IOError         // IOError
+	ArgErr *hbase1.IllegalArgument // IllegalArgument
+	Err    error                   // error
 
 }
 
-func newHbaseError(io *Hbase.IOError, arg *Hbase.IllegalArgument, err error) *HbaseError {
+func newHbaseError(io *hbase1.IOError, arg *hbase1.IllegalArgument, err error) *HbaseError {
 	return &HbaseError{
 		IOErr:  io,
 		ArgErr: arg,
@@ -64,14 +65,14 @@ func (e *HbaseError) Error() string {
 	return e.String()
 }
 
-func checkHbaseError(io *Hbase.IOError, err error) error {
+func checkHbaseError(io *hbase1.IOError, err error) error {
 	if io != nil || err != nil {
 		return newHbaseError(io, nil, err)
 	}
 	return nil
 }
 
-func checkHbaseArgError(io *Hbase.IOError, arg *Hbase.IllegalArgument, err error) error {
+func checkHbaseArgError(io *hbase1.IOError, arg *hbase1.IllegalArgument, err error) error {
 	if io != nil || arg != nil || err != nil {
 		return newHbaseError(io, arg, err)
 	}

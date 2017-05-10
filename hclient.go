@@ -4,9 +4,8 @@ import (
 	"net"
 	"net/url"
 
-	"github.com/sdming/goh/Hbase"
-
 	"git.apache.org/thrift.git/lib/go/thrift"
+	"github.com/chenjingping/goh/hbase1"
 )
 
 /*
@@ -19,7 +18,7 @@ type HClient struct {
 	Protocol        int
 	Trans           thrift.TTransport
 	ProtocolFactory thrift.TProtocolFactory
-	hbase           *Hbase.HbaseClient
+	hbase           *hbase1.HbaseClient
 	state           int //
 }
 
