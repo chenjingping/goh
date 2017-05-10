@@ -43,17 +43,6 @@ const (
 	TZlibTransport          // "debug"
 )
 
-/*
-Server
-*/
-/*
-const (
-	TNonblockingServer = iota
-	TSimpleServer
-	TThreadPoolServer
-)
-*/
-
 func newProtocolFactory(protocol int) (thrift.TProtocolFactory, error) {
 	switch protocol {
 	case TBinaryProtocol:

@@ -1484,8 +1484,7 @@ var _key1 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key1 = temp
+    _key1 = v
 }
     _val2 := &TCell{}
     if err := _val2.Read(iprot); err != nil {
@@ -10759,8 +10758,7 @@ var _key100 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key100 = temp
+    _key100 = v
 }
     _val101 := &ColumnDescriptor{
     MaxVersions: 3,
@@ -11698,15 +11696,13 @@ var _key104 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key104 = temp
+    _key104 = v
 }
 var _val105 Text
     if v, err := iprot.ReadBinary(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _val105 = temp
+    _val105 = v
 }
     p.Attributes[_key104] = _val105
   }
@@ -12077,15 +12073,13 @@ var _key107 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key107 = temp
+    _key107 = v
 }
 var _val108 Text
     if v, err := iprot.ReadBinary(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _val108 = temp
+    _val108 = v
 }
     p.Attributes[_key107] = _val108
   }
@@ -12486,8 +12480,7 @@ var _key110 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key110 = temp
+    _key110 = v
 }
 var _val111 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -12848,8 +12841,7 @@ var _key113 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key113 = temp
+    _key113 = v
 }
 var _val114 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -13209,8 +13201,7 @@ var _key117 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key117 = temp
+    _key117 = v
 }
 var _val118 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -13576,8 +13567,7 @@ var _key120 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key120 = temp
+    _key120 = v
 }
 var _val121 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -13967,8 +13957,7 @@ var _key124 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key124 = temp
+    _key124 = v
 }
 var _val125 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -14338,8 +14327,7 @@ var _key128 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key128 = temp
+    _key128 = v
 }
 var _val129 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -14719,8 +14707,7 @@ var _key133 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key133 = temp
+    _key133 = v
 }
 var _val134 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -15106,8 +15093,7 @@ var _key137 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key137 = temp
+    _key137 = v
 }
 var _val138 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -15517,8 +15503,7 @@ var _key142 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key142 = temp
+    _key142 = v
 }
 var _val143 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -15916,8 +15901,7 @@ var _key146 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key146 = temp
+    _key146 = v
 }
 var _val147 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -16298,8 +16282,7 @@ var _key149 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key149 = temp
+    _key149 = v
 }
 var _val150 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -16650,8 +16633,7 @@ var _key152 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key152 = temp
+    _key152 = v
 }
 var _val153 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -16999,8 +16981,7 @@ var _key155 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key155 = temp
+    _key155 = v
 }
 var _val156 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -17700,8 +17681,7 @@ var _key157 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key157 = temp
+    _key157 = v
 }
 var _val158 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -18022,8 +18002,7 @@ var _key159 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key159 = temp
+    _key159 = v
 }
 var _val160 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -18316,8 +18295,7 @@ var _key161 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key161 = temp
+    _key161 = v
 }
 var _val162 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -18992,8 +18970,7 @@ var _key164 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key164 = temp
+    _key164 = v
 }
 var _val165 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -19280,8 +19257,7 @@ var _key166 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key166 = temp
+    _key166 = v
 }
 var _val167 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -19628,8 +19604,7 @@ var _key169 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key169 = temp
+    _key169 = v
 }
 var _val170 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -20015,8 +19990,7 @@ var _key172 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key172 = temp
+    _key172 = v
 }
 var _val173 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -20389,8 +20363,7 @@ var _key175 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key175 = temp
+    _key175 = v
 }
 var _val176 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -20774,8 +20747,7 @@ var _key178 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key178 = temp
+    _key178 = v
 }
 var _val179 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -21191,8 +21163,7 @@ var _key181 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key181 = temp
+    _key181 = v
 }
 var _val182 Text
     if v, err := iprot.ReadBinary(); err != nil {
@@ -23176,8 +23147,7 @@ var _key187 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    temp := Text(v)
-    _key187 = temp
+    _key187 = v
 }
 var _val188 Text
     if v, err := iprot.ReadBinary(); err != nil {

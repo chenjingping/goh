@@ -4,8 +4,6 @@
 package goh
 
 import (
-	"fmt"
-
 	"github.com/chenjingping/goh/hbase1"
 )
 
@@ -85,15 +83,15 @@ func toHbaseTextMap(source map[string]string) map[string]hbase1.Text {
  *  - TimeToLive
  */
 type ColumnDescriptor struct {
-	Name                  string "name",                  // 1
-	MaxVersions           int32  "maxVersions",           // 2
-	Compression           string "compression",           // 3
-	InMemory              bool   "inMemory",              // 4
-	BloomFilterType       string "bloomFilterType",       // 5
-	BloomFilterVectorSize int32  "bloomFilterVectorSize", // 6
-	BloomFilterNbHashes   int32  "bloomFilterNbHashes",   // 7
-	BlockCacheEnabled     bool   "blockCacheEnabled",     // 8
-	TimeToLive            int32  "timeToLive"             // 9
+	Name                  string "name"                  // 1
+	MaxVersions           int32  "maxVersions"           // 2
+	Compression           string "compression"           // 3
+	InMemory              bool   "inMemory"              // 4
+	BloomFilterType       string "bloomFilterType"       // 5
+	BloomFilterVectorSize int32  "bloomFilterVectorSize" // 6
+	BloomFilterNbHashes   int32  "bloomFilterNbHashes"   // 7
+	BlockCacheEnabled     bool   "blockCacheEnabled"     // 8
+	TimeToLive            int32  "timeToLive"            // 9
 }
 
 func toColumn(col *hbase1.ColumnDescriptor) *ColumnDescriptor {
@@ -124,7 +122,7 @@ func toColMap(cols map[string]*hbase1.ColumnDescriptor) map[string]*ColumnDescri
 
 func toHbaseColumn(col *ColumnDescriptor) *hbase1.ColumnDescriptor {
 	return &hbase1.ColumnDescriptor{
-		Name:                  Hbase.Text(col.Name),
+		Name:                  hbase1.Text(col.Name),
 		MaxVersions:           col.MaxVersions,
 		Compression:           col.Compression,
 		InMemory:              col.InMemory,
@@ -192,7 +190,7 @@ func toRegion(region *hbase1.TRegionInfo) *TRegionInfo {
 	return &TRegionInfo{
 		StartKey:   string(region.StartKey),
 		EndKey:     string(region.EndKey),
-		Id:         region.Id,
+		Id:         region.ID,
 		Name:       string(region.Name),
 		Version:    region.Version,
 		ServerName: string(region.ServerName),
@@ -327,22 +325,22 @@ func toHbaseTScan(scan *TScan) *hbase1.TScan {
 
 	if scan.FilterString == "" {
 		return &hbase1.TScan{
-			StartRow:     Hbase.Text(scan.StartRow),
-			StopRow:      Hbase.Text(scan.StopRow),
-			Timestamp:    scan.Timestamp,
+			StartRow:     hbase1.Text(scan.StartRow),
+			StopRow:      hbase1.Text(scan.StopRow),
+			Timestamp:    &scan.Timestamp,
 			Columns:      toHbaseTextList(scan.Columns),
-			Caching:      scan.Caching,
+			Caching:      &scan.Caching,
 			FilterString: nil,
 		}
 	}
 
 	return &hbase1.TScan{
-		StartRow:     Hbase.Text(scan.StartRow),
-		StopRow:      Hbase.Text(scan.StopRow),
-		Timestamp:    scan.Timestamp,
+		StartRow:     hbase1.Text(scan.StartRow),
+		StopRow:      hbase1.Text(scan.StopRow),
+		Timestamp:    &scan.Timestamp,
 		Columns:      toHbaseTextList(scan.Columns),
-		Caching:      scan.Caching,
-		FilterString: Hbase.Text(scan.FilterString),
+		Caching:      &scan.Caching,
+		FilterString: hbase1.Text(scan.FilterString),
 	}
 
 }
