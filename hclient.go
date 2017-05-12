@@ -24,6 +24,10 @@ type HClient struct {
 	state           int
 }
 
+/*
+Dail return hbase client struct
+
+*/
 func Dail(name, host, port string) (interface{}, error) {
 	addr := strings.Join([]string{name, host}, "")
 
