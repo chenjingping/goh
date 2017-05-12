@@ -1,11 +1,15 @@
 package goh
 
 import (
+	"errors"
 	"net"
 	"net/url"
 	"strconv"
 
+	"strings"
+
 	"git.apache.org/thrift.git/lib/go/thrift"
+	"github.com/chenjingping/goh"
 	"github.com/chenjingping/goh/hbase1"
 )
 
@@ -23,29 +27,69 @@ type HClient struct {
 	state           int //
 }
 
-/*
-NewHttpClient return a hbase http client instance
+func Dail(name, host, port string) (interface{}, error) {
+	addr := strings.Join([]string{name, host})
 
-*/
-func NewHttpClient(rawurl string, protocol int) (client *HClient, err error) {
-	parsedUrl, err := url.Parse(rawurl)
-	if err != nil {
-		return
+	cli, err := goh.NewTCPClient(addr, goh.TBinaryProtocol, false)
+
+	if err := cli.Open(); err != nil {
+		return nil, err
 	}
 
-	trans, err := thrift.NewTHttpClient(parsedUrl.String())
-	if err != nil {
-		return
-	}
-
-	return newClient(parsedUrl.String(), protocol, trans)
+	return cli, nil
 }
 
 /*
-NewTcpClient return a base tcp client instance
+CloseCli return hbase close status
 
 */
-func NewTcpClient(rawaddr string, protocol int, framed bool) (client *HClient, err error) {
+func CloseCli(itf interface{}) error {
+	if cli, ok := itf.(*HClient); ok {
+		return cli.Close()
+	}
+
+	return errors.New("client conversion failed")
+}
+
+/*
+KeepAlive return hbase online status
+
+*/
+func KeepAlive(itf interface{}) error {
+	if cnn, ok := itf.(*HClient); ok {
+		if tbls, err := cli.GetTableNames(); tbls != nil {
+			return nil
+		}
+
+		return errors.New("the hbase is not available")
+	}
+
+	return errors.New("client conversion failed")
+}
+
+/*
+NewHTTPClient return a hbase http client instance
+
+*/
+func NewHTTPClient(rawurl string, protocol int) (client *HClient, err error) {
+	parsedURL, err := url.Parse(rawurl)
+	if err != nil {
+		return
+	}
+
+	trans, err := thrift.NewTHttpClient(parsedURL.String())
+	if err != nil {
+		return
+	}
+
+	return newClient(parsedURL.String(), protocol, trans)
+}
+
+/*
+NewTCPClient return a base tcp client instance
+
+*/
+func NewTCPClient(rawaddr string, protocol int, framed bool) (client *HClient, err error) {
 	tcpAddr, err := net.ResolveTCPAddr("tcp", rawaddr)
 	if err != nil {
 		return
@@ -82,10 +126,6 @@ func newClient(addr string, protocol int, trans thrift.TTransport) (*HClient, er
 		Trans:           trans,
 		hbase:           hbase1.NewHbaseClientFactory(trans, protocolFactory),
 	}
-
-	// if err = client.Open(); err != nil {
-	// 	return nil, err
-	// }
 
 	return client, nil
 }
