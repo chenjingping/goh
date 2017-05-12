@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"git.apache.org/thrift.git/lib/go/thrift"
-	"github.com/chenjingping/goh"
 	"github.com/chenjingping/goh/hbase1"
 )
 
@@ -17,26 +16,26 @@ import (
 HClient is wrap of hbase client
 */
 type HClient struct {
-	//Host            string
-	//Port            int
 	addr            string
 	Protocol        int
 	Trans           thrift.TTransport
 	ProtocolFactory thrift.TProtocolFactory
 	hbase           *hbase1.HbaseClient
-	state           int //
+	state           int
 }
 
 func Dail(name, host, port string) (interface{}, error) {
-	addr := strings.Join([]string{name, host})
+	addr := strings.Join([]string{name, host}, "")
 
-	cli, err := goh.NewTCPClient(addr, goh.TBinaryProtocol, false)
+	if cli, err := NewTCPClient(addr, TBinaryProtocol, false); err == nil {
+		if err := cli.Open(); err != nil {
+			return nil, err
+		}
 
-	if err := cli.Open(); err != nil {
-		return nil, err
+		return cli, nil
 	}
 
-	return cli, nil
+	return nil, errors.New("create client failed")
 }
 
 /*
@@ -57,7 +56,7 @@ KeepAlive return hbase online status
 */
 func KeepAlive(itf interface{}) error {
 	if cnn, ok := itf.(*HClient); ok {
-		if tbls, err := cli.GetTableNames(); tbls != nil {
+		if tbls, _ := cnn.GetTableNames(); tbls != nil {
 			return nil
 		}
 
