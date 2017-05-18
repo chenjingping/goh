@@ -29,7 +29,7 @@ Dail return hbase client struct
 
 */
 func Dail(name, host, port string) (interface{}, error) {
-	addr := strings.Join([]string{name, host}, "")
+	addr := strings.Join([]string{name, host}, ":")
 
 	if cli, err := NewTCPClient(addr, TBinaryProtocol, false); err == nil {
 		if err := cli.Open(); err != nil {
