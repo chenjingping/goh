@@ -2,11 +2,10 @@ package goh
 
 import (
 	"errors"
+	"fmt"
 	"net"
 	"net/url"
 	"strconv"
-
-	"strings"
 
 	"git.apache.org/thrift.git/lib/go/thrift"
 	"github.com/chenjingping/goh/hbase1"
@@ -29,9 +28,7 @@ Dail return hbase client struct
 
 */
 func Dail(name, host, port string) (interface{}, error) {
-	addr := strings.Join([]string{name, host}, ":")
-
-	if cli, err := NewTCPClient(addr, TBinaryProtocol, false); err == nil {
+	if cli, err := NewTCPClient(fmt.Sprintf("%s:%s", host, port), TBinaryProtocol, false); err == nil {
 		if err := cli.Open(); err != nil {
 			return nil, err
 		}
