@@ -316,6 +316,7 @@ type TScan struct {
 	Columns      []string "columns"      // 4
 	Caching      int32    "caching"      // 5
 	FilterString string   "filterString" // 6
+	//BatchSize    int32    "batchSize"    // 7
 }
 
 func toHbaseTScan(scan *TScan) *hbase1.TScan {
@@ -331,6 +332,7 @@ func toHbaseTScan(scan *TScan) *hbase1.TScan {
 			Columns:      toHbaseTextList(scan.Columns),
 			Caching:      &scan.Caching,
 			FilterString: nil,
+			//BatchSize:	  &scan.BatchSize,
 		}
 	}
 
@@ -341,8 +343,8 @@ func toHbaseTScan(scan *TScan) *hbase1.TScan {
 		Columns:      toHbaseTextList(scan.Columns),
 		Caching:      &scan.Caching,
 		FilterString: hbase1.Text(scan.FilterString),
+		//BatchSize:	  &scan.BatchSize,
 	}
-
 }
 
 // /**

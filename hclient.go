@@ -126,7 +126,7 @@ func newClient(addr string, protocol int, trans thrift.TTransport) (*HClient, er
 		Trans:           trans,
 		hbase:           hbase1.NewHbaseClientFactory(trans, protocolFactory),
 	}
-
+	
 	return client, nil
 }
 
@@ -247,13 +247,11 @@ func (client *HClient) GetColumnDescriptors(tableName string) (columns map[strin
  *  - TableName: table name
  */
 func (client *HClient) GetTableRegions(tableName string) (regions []*TRegionInfo, err error) {
-	ret, e1 := client.hbase.GetTableRegions(hbase1.Text(tableName))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
+	if ret, e1 := client.hbase.GetTableRegions(hbase1.Text(tableName)); e1 == nil {
+		return toRegionList(ret), nil
+	} else {
+		return nil, e1
 	}
-
-	regions = toRegionList(ret)
-	return
 }
 
 /**
@@ -306,13 +304,7 @@ func (client *HClient) DeleteTable(tableName string) (err error) {
  *  - Attributes: Get attributes
  */
 func (client *HClient) Get(tableName string, row []byte, column string, attributes map[string]string) (data []*hbase1.TCell, err error) {
-	ret, e1 := client.hbase.Get(hbase1.Text(tableName), hbase1.Text(row), hbase1.Text(column), toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.Get(hbase1.Text(tableName), hbase1.Text(row), hbase1.Text(column), toHbaseTextMap(attributes))
 }
 
 /**
@@ -329,13 +321,7 @@ func (client *HClient) Get(tableName string, row []byte, column string, attribut
  *  - Attributes: Get attributes
  */
 func (client *HClient) GetVer(tableName string, row []byte, column string, numVersions int32, attributes map[string]string) (data []*hbase1.TCell, err error) {
-	ret, e1 := client.hbase.GetVer(hbase1.Text(tableName), hbase1.Text(row), hbase1.Text(column), numVersions, toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.GetVer(hbase1.Text(tableName), hbase1.Text(row), hbase1.Text(column), numVersions, toHbaseTextMap(attributes))
 }
 
 /**
@@ -354,13 +340,7 @@ func (client *HClient) GetVer(tableName string, row []byte, column string, numVe
  *  - Attributes: Get attributes
  */
 func (client *HClient) GetVerTs(tableName string, row []byte, column string, timestamp int64, numVersions int32, attributes map[string]string) (data []*hbase1.TCell, err error) {
-	ret, e1 := client.hbase.GetVerTs(hbase1.Text(tableName), hbase1.Text(row), hbase1.Text(column), timestamp, numVersions, toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.GetVerTs(hbase1.Text(tableName), hbase1.Text(row), hbase1.Text(column), timestamp, numVersions, toHbaseTextMap(attributes))
 }
 
 /**
@@ -375,13 +355,7 @@ func (client *HClient) GetVerTs(tableName string, row []byte, column string, tim
  *  - Attributes: Get attributes
  */
 func (client *HClient) GetRow(tableName string, row []byte, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
-	ret, e1 := client.hbase.GetRow(hbase1.Text(tableName), hbase1.Text(row), toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.GetRow(hbase1.Text(tableName), hbase1.Text(row), toHbaseTextMap(attributes))
 }
 
 /**
@@ -397,13 +371,7 @@ func (client *HClient) GetRow(tableName string, row []byte, attributes map[strin
  *  - Attributes: Get attributes
  */
 func (client *HClient) GetRowWithColumns(tableName string, row []byte, columns []string, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
-	ret, e1 := client.hbase.GetRowWithColumns(hbase1.Text(tableName), hbase1.Text(row), toHbaseTextList(columns), toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.GetRowWithColumns(hbase1.Text(tableName), hbase1.Text(row), toHbaseTextList(columns), toHbaseTextMap(attributes))
 }
 
 /**
@@ -419,13 +387,7 @@ func (client *HClient) GetRowWithColumns(tableName string, row []byte, columns [
  *  - Attributes: Get attributes
  */
 func (client *HClient) GetRowTs(tableName string, row []byte, timestamp int64, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
-	ret, e1 := client.hbase.GetRowTs(hbase1.Text(tableName), hbase1.Text(row), timestamp, toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.GetRowTs(hbase1.Text(tableName), hbase1.Text(row), timestamp, toHbaseTextMap(attributes))
 }
 
 /**
@@ -442,13 +404,7 @@ func (client *HClient) GetRowTs(tableName string, row []byte, timestamp int64, a
  *  - Attributes: Get attributes
  */
 func (client *HClient) GetRowWithColumnsTs(tableName string, row []byte, columns []string, timestamp int64, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
-	ret, e1 := client.hbase.GetRowWithColumnsTs(hbase1.Text(tableName), hbase1.Text(row), toHbaseTextList(columns), timestamp, toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.GetRowWithColumnsTs(hbase1.Text(tableName), hbase1.Text(row), toHbaseTextList(columns), timestamp, toHbaseTextMap(attributes))
 }
 
 /**
@@ -463,13 +419,7 @@ func (client *HClient) GetRowWithColumnsTs(tableName string, row []byte, columns
  *  - Attributes: Get attributes
  */
 func (client *HClient) GetRows(tableName string, rows [][]byte, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
-	ret, e1 := client.hbase.GetRows(hbase1.Text(tableName), toHbaseTextListFromByte(rows), toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.GetRows(hbase1.Text(tableName), toHbaseTextListFromByte(rows), toHbaseTextMap(attributes))
 }
 
 /**
@@ -486,16 +436,10 @@ func (client *HClient) GetRows(tableName string, rows [][]byte, attributes map[s
  */
 func (client *HClient) GetRowsWithColumns(tableName string, rows [][]byte, columns []string, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
 	if err = client.Open(); err != nil {
-		return
+		return nil, err
 	}
 
-	ret, e1 := client.hbase.GetRowsWithColumns(hbase1.Text(tableName), toHbaseTextListFromByte(rows), toHbaseTextList(columns), toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.GetRowsWithColumns(hbase1.Text(tableName), toHbaseTextListFromByte(rows), toHbaseTextList(columns), toHbaseTextMap(attributes))
 }
 
 /**
@@ -511,13 +455,7 @@ func (client *HClient) GetRowsWithColumns(tableName string, rows [][]byte, colum
  *  - Attributes: Get attributes
  */
 func (client *HClient) GetRowsTs(tableName string, rows [][]byte, timestamp int64, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
-	ret, e1 := client.hbase.GetRowsTs(hbase1.Text(tableName), toHbaseTextListFromByte(rows), timestamp, toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.GetRowsTs(hbase1.Text(tableName), toHbaseTextListFromByte(rows), timestamp, toHbaseTextMap(attributes))
 }
 
 /**
@@ -534,13 +472,7 @@ func (client *HClient) GetRowsTs(tableName string, rows [][]byte, timestamp int6
  *  - Attributes: Get attributes
  */
 func (client *HClient) GetRowsWithColumnsTs(tableName string, rows [][]byte, columns []string, timestamp int64, attributes map[string]string) (data []*hbase1.TRowResult_, err error) {
-	ret, e1 := client.hbase.GetRowsWithColumnsTs(hbase1.Text(tableName), toHbaseTextListFromByte(rows), toHbaseTextList(columns), timestamp, toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.GetRowsWithColumnsTs(hbase1.Text(tableName), toHbaseTextListFromByte(rows), toHbaseTextList(columns), timestamp, toHbaseTextMap(attributes))
 }
 
 /*
@@ -617,13 +549,7 @@ func (client *HClient) MutateRowsTs(tableName string, rowBatches []*hbase1.Batch
  *  - Value: amount to increment by
  */
 func (client *HClient) AtomicIncrement(tableName string, row []byte, column string, value int64) (v int64, err error) {
-	ret, e1 := client.hbase.AtomicIncrement(hbase1.Text(tableName), hbase1.Text(row), hbase1.Text(column), value)
-	if err = checkHbaseArgError(nil, nil, e1); err != nil {
-		return
-	}
-
-	v = ret
-	return
+	return client.hbase.AtomicIncrement(hbase1.Text(tableName), hbase1.Text(row), hbase1.Text(column), value)
 }
 
 /**
@@ -712,12 +638,8 @@ func (client *HClient) DeleteAllRowTs(tableName string, row []byte, timestamp in
  */
 func (client *HClient) ScannerOpenWithScan(tableName string, scan *TScan, attributes map[string]string) (id int32, err error) {
 	ret, e1 := client.hbase.ScannerOpenWithScan(hbase1.Text(tableName), toHbaseTScan(scan), toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
 
-	id = int32(ret)
-	return
+	return int32(ret), e1
 }
 
 /**
@@ -737,12 +659,8 @@ func (client *HClient) ScannerOpenWithScan(tableName string, scan *TScan, attrib
  */
 func (client *HClient) ScannerOpen(tableName string, startRow []byte, columns []string, attributes map[string]string) (id int32, err error) {
 	ret, e1 := client.hbase.ScannerOpen(hbase1.Text(tableName), hbase1.Text(startRow), toHbaseTextList(columns), toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	id = int32(ret)
-	return
+	
+	return int32(ret), e1
 }
 
 /**
@@ -765,12 +683,8 @@ func (client *HClient) ScannerOpen(tableName string, startRow []byte, columns []
  */
 func (client *HClient) ScannerOpenWithStop(tableName string, startRow []byte, stopRow []byte, columns []string, attributes map[string]string) (id int32, err error) {
 	ret, e1 := client.hbase.ScannerOpenWithStop(hbase1.Text(tableName), hbase1.Text(startRow), hbase1.Text(stopRow), toHbaseTextList(columns), toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	id = int32(ret)
-	return
+	
+	return int32(ret), e1
 }
 
 /**
@@ -787,12 +701,8 @@ func (client *HClient) ScannerOpenWithStop(tableName string, startRow []byte, st
  */
 func (client *HClient) ScannerOpenWithPrefix(tableName string, startAndPrefix []byte, columns []string, attributes map[string]string) (id int32, err error) {
 	ret, e1 := client.hbase.ScannerOpenWithPrefix(hbase1.Text(tableName), hbase1.Text(startAndPrefix), toHbaseTextList(columns), toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
 
-	id = int32(ret)
-	return
+	return int32(ret), e1
 }
 
 /**
@@ -814,12 +724,8 @@ func (client *HClient) ScannerOpenWithPrefix(tableName string, startAndPrefix []
  */
 func (client *HClient) ScannerOpenTs(tableName string, startRow []byte, columns []string, timestamp int64, attributes map[string]string) (id int32, err error) {
 	ret, e1 := client.hbase.ScannerOpenTs(hbase1.Text(tableName), hbase1.Text(startRow), toHbaseTextList(columns), timestamp, toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
 
-	id = int32(ret)
-	return
+	return int32(ret), e1
 }
 
 /**
@@ -844,12 +750,8 @@ func (client *HClient) ScannerOpenTs(tableName string, startRow []byte, columns 
  */
 func (client *HClient) ScannerOpenWithStopTs(tableName string, startRow []byte, stopRow []byte, columns []string, timestamp int64, attributes map[string]string) (id int32, err error) {
 	ret, e1 := client.hbase.ScannerOpenWithStopTs(hbase1.Text(tableName), hbase1.Text(startRow), hbase1.Text(stopRow), toHbaseTextList(columns), timestamp, toHbaseTextMap(attributes))
-	if err = checkHbaseError(nil, e1); err != nil {
-		return
-	}
-
-	id = int32(ret)
-	return
+	
+	return int32(ret), e1
 }
 
 /**
@@ -868,13 +770,7 @@ func (client *HClient) ScannerOpenWithStopTs(tableName string, startRow []byte, 
  *  - Id: id of a scanner returned by scannerOpen
  */
 func (client *HClient) ScannerGet(id int32) (data []*hbase1.TRowResult_, err error) {
-	ret, e1 := client.hbase.ScannerGet(hbase1.ScannerID(id))
-	if err = e1; err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.ScannerGet(hbase1.ScannerID(id))
 }
 
 /**
@@ -894,13 +790,7 @@ func (client *HClient) ScannerGet(id int32) (data []*hbase1.TRowResult_, err err
  *  - NbRows: number of results to return
  */
 func (client *HClient) ScannerGetList(id int32, nbRows int32) (data []*hbase1.TRowResult_, err error) {
-	ret, e1 := client.hbase.ScannerGetList(hbase1.ScannerID(id), nbRows)
-	if err = e1; err != nil {
-		return
-	}
-
-	data = ret
-	return
+	return client.hbase.ScannerGetList(hbase1.ScannerID(id), nbRows)
 }
 
 /**
