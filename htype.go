@@ -4,6 +4,7 @@
 package goh
 
 import (
+	"fmt"
 	"github.com/chenjingping/goh/hbase1"
 )
 
@@ -251,7 +252,6 @@ func NewMutation(column string, value []byte) *hbase1.Mutation {
 // 	Row       []byte      "row"       // 1
 // 	Mutations []*Mutation "mutations" // 2
 // }
-
 func NewBatchMutation(row []byte, mutations []*hbase1.Mutation) *hbase1.BatchMutation {
 	return &hbase1.BatchMutation{
 		Row:       []byte(row),
@@ -316,35 +316,30 @@ type TScan struct {
 	Columns      []string "columns"      // 4
 	Caching      int32    "caching"      // 5
 	FilterString string   "filterString" // 6
-	//BatchSize    int32    "batchSize"    // 7
+	BatchSize    int32    "batchSize"    // 7
 }
 
 func toHbaseTScan(scan *TScan) *hbase1.TScan {
-	if scan == nil {
-		return nil
-	}
+	if scan == nil { return nil }
+	
+	tscan := hbase1.NewTScan()
+
+	tscan.StartRow = hbase1.Text(scan.StartRow)
+	tscan.StopRow = hbase1.Text(scan.StopRow)
+	tscan.Timestamp = &scan.Timestamp
+	tscan.Columns = toHbaseTextList(scan.Columns)
+	tscan.Caching = &scan.Caching
+	tscan.BatchSize =  &scan.BatchSize
+	
+	fmt.Println(string(tscan.StartRow), string(tscan.StopRow))
 
 	if scan.FilterString == "" {
-		return &hbase1.TScan{
-			StartRow:     hbase1.Text(scan.StartRow),
-			StopRow:      hbase1.Text(scan.StopRow),
-			Timestamp:    &scan.Timestamp,
-			Columns:      toHbaseTextList(scan.Columns),
-			Caching:      &scan.Caching,
-			FilterString: nil,
-			//BatchSize:	  &scan.BatchSize,
-		}
+		tscan.FilterString = nil
+	} else {
+		tscan.FilterString = hbase1.Text(scan.FilterString)
 	}
 
-	return &hbase1.TScan{
-		StartRow:     hbase1.Text(scan.StartRow),
-		StopRow:      hbase1.Text(scan.StopRow),
-		Timestamp:    &scan.Timestamp,
-		Columns:      toHbaseTextList(scan.Columns),
-		Caching:      &scan.Caching,
-		FilterString: hbase1.Text(scan.FilterString),
-		//BatchSize:	  &scan.BatchSize,
-	}
+	return tscan
 }
 
 // /**
