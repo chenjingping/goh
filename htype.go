@@ -4,7 +4,6 @@
 package goh
 
 import (
-	"fmt"
 	"github.com/chenjingping/goh/hbase1"
 )
 
@@ -326,19 +325,30 @@ func toHbaseTScan(scan *TScan) *hbase1.TScan {
 
 	tscan.StartRow = hbase1.Text(scan.StartRow)
 	tscan.StopRow = hbase1.Text(scan.StopRow)
-	tscan.Timestamp = &scan.Timestamp
-	tscan.Columns = toHbaseTextList(scan.Columns)
-	tscan.Caching = &scan.Caching
-	tscan.BatchSize =  &scan.BatchSize
-	
-	fmt.Println(string(tscan.StartRow), string(tscan.StopRow))
 
+	if len(scan.Columns) > 0 {
+		tscan.Columns = toHbaseTextList(scan.Columns)
+	}
+	
+	if scan.Timestamp > 0 {
+		tscan.Timestamp = &scan.Timestamp
+	}
+
+	if scan.Caching > 0 {
+		tscan.Caching = &scan.Caching
+	}
+	
+	if scan.BatchSize > 0 {
+		tscan.BatchSize =  &scan.BatchSize
+	}
+		
 	if scan.FilterString == "" {
 		tscan.FilterString = nil
 	} else {
 		tscan.FilterString = hbase1.Text(scan.FilterString)
 	}
 
+	
 	return tscan
 }
 
