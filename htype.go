@@ -355,14 +355,14 @@ func toHbaseTScan(scan *TScan) *hbase1.TScan {
 }
 
 /*
-ScanHbaseCellValue get hbase cell value
+ScanHbaseColumns get hbase cell value
 
 */
-func ScanHbaseCellValue(cols map[string]*hbase1.TCell, nams []string, dest... interface{}) error {
+func ScanHbaseColumns(cols map[string]*hbase1.TCell, nams []string, dest... interface{}) error {
 	for idx, nam := range nams {
 		if val, ok := cols[nam]; ok {
 			tmp := string(val.Value)
-
+			
 			d := dest[idx]
 			switch dt := d.(type) {
 			case *int:
