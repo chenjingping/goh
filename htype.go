@@ -4,6 +4,8 @@
 package goh
 
 import (
+	"fmt"
+	"strconv"
 	"github.com/chenjingping/goh/hbase1"
 )
 
@@ -350,6 +352,53 @@ func toHbaseTScan(scan *TScan) *hbase1.TScan {
 
 	
 	return tscan
+}
+
+/*
+ScanHbaseCellValue get hbase cell value
+
+*/
+func ScanHbaseCellValue(cols map[string]*hbase1.TCell, nams []string, dest... interface{}) error {
+	for idx, nam := range nams {
+		if val, ok := cols[nam]; ok {
+			tmp := string(val.Value)
+
+			d := dest[idx]
+			switch dt := d.(type) {
+			case *int:
+				i, _ := strconv.ParseInt(tmp, 10, 0)
+				*dt = int(i)
+			case *int64:
+				i, _ := strconv.ParseInt(tmp, 10, 0)
+				*dt = int64(i)
+			case *int32:
+				i, _ := strconv.ParseInt(tmp, 10, 0)
+				*dt = int32(i)
+			case *int16:
+				i, _ := strconv.ParseInt(tmp, 10, 0)
+				*dt = int16(i)
+			case *int8:
+				i, _ := strconv.ParseInt(tmp, 10, 0)
+				*dt = int8(i)
+			case *float64:
+				*dt, _ = strconv.ParseFloat(tmp, 64)
+			case *float32:
+				f, _ := strconv.ParseFloat(tmp, 32)
+				*dt = float32(f)
+			case *string:
+				*dt = tmp
+			case *[]byte:
+				*dt = []byte(val.Value)
+			case *bool:
+				b, _ := strconv.ParseBool(tmp)
+				*dt = b
+			default:
+				return fmt.Errorf("Can't scan value of type %T with value %v", dt, tmp)
+			}
+		}
+	}
+
+	return nil
 }
 
 // /**
