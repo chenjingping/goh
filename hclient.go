@@ -35,7 +35,7 @@ func Dail(name, host, port string) (interface{}, error) {
 
 		return cli, nil
 	}
-
+	
 	return nil, errors.New("create client failed")
 }
 
@@ -96,13 +96,15 @@ func NewTCPClient(rawaddr string, protocol int, framed bool) (client *HClient, e
 	}
 
 	var trans thrift.TTransport
-
+	
 	trans, err = thrift.NewTSocket(net.JoinHostPort(tcpAddr.IP.String(), strconv.Itoa(tcpAddr.Port)))
 	if err != nil {
 		return
 	}
 	if framed {
 		trans = thrift.NewTFramedTransport(trans)
+	}else {
+		trans = thrift.NewTBufferedTransport(trans, 8192)
 	}
 
 	return newClient(tcpAddr.String(), protocol, trans)
