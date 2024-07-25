@@ -9,7 +9,7 @@ import (
 	"errors"
 	"fmt"
 
-	"git.apache.org/thrift.git/lib/go/thrift"
+	"github.com/chenjingping/thrift/lib/go/thrift"
 )
 
 /*
