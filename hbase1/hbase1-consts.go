@@ -6,7 +6,7 @@ package hbase1
 import (
 	"bytes"
 	"fmt"
-	"git.apache.org/thrift.git/lib/go/thrift"
+	"github.com/chenjingping/thrift/lib/go/thrift"
 )
 
 // (needed to ensure safety because of naive import list construction.)
