@@ -2,10 +2,8 @@ package goh
 
 import (
 	"errors"
-	"fmt"
 	"net"
 	"net/url"
-	"strconv"
 
 	"github.com/chenjingping/thrift/lib/go/thrift"
 	"github.com/chenjingping/goh/hbase1"
