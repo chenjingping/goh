@@ -50,7 +50,7 @@ func CloseCli(itf interface{}) error {
 		return cli.Close()
 	}
 
-	return errors.New("client conversion failed")
+	return errors.New("client close failed")
 }
 
 /*
@@ -66,7 +66,7 @@ func KeepAlive(itf interface{}) error {
 		return errors.New("the hbase is not available")
 	}
 
-	return errors.New("client conversion failed")
+	return errors.New("client keepalive failed")
 }
 
 /*
