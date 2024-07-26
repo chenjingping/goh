@@ -28,7 +28,7 @@ Dail return hbase client struct
 
 */
 func Dail(name, host, port string) (interface{}, error) {
-	cli, err := NewTCPClient(fmt.Sprintf("%s:%s", host, port), TBinaryProtocol, false)
+	cli, err := NewTCPClient(host, port, TBinaryProtocol, false)
 
 	if err == nil {
 		if err := cli.Open(); err != nil {
@@ -91,15 +91,12 @@ func NewHTTPClient(rawurl string, protocol int) (client *HClient, err error) {
 NewTCPClient return a base tcp client instance
 
 */
-func NewTCPClient(rawaddr string, protocol int, framed bool) (client *HClient, err error) {
-	tcpAddr, err := net.ResolveTCPAddr("tcp", rawaddr)
-	if err != nil {
-		return nil, err
-	}
-
+func NewTCPClient(ip string, port string, protocol int, framed bool) (client *HClient, err error) {
 	var trans thrift.TTransport
 	
-	trans, err = thrift.NewTSocket(net.JoinHostPort(tcpAddr.IP.String(), strconv.Itoa(tcpAddr.Port)))
+	addr := net.JoinHostPort(ip, port)
+
+	trans, err = thrift.NewTSocket(addr)
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +106,7 @@ func NewTCPClient(rawaddr string, protocol int, framed bool) (client *HClient, e
 		trans = thrift.NewTBufferedTransport(trans, 8192)
 	}
 
-	return newClient(tcpAddr.String(), protocol, trans)
+	return newClient(addr, protocol, trans)
 }
 
 /*
